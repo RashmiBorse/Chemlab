@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <title>ChemLabs | Add Stocks</title>
+
+</head>
+
+<body>
+
+  <nav class="navbar fixed-top navbar-expand-xl " style="background-color:  #76CBF4;">
+    <a class="navbar-brand" href="{% url 'home' %}"><span class="logo_title">Chem</span><img id="navlogo"
+        src="{% static 'img/logo.png' %}"><span class="logo_title">labs</span></a>
+    <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon "></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="snav-item">
+          Supervisor
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid d-flex align-items-center justify-content-center"
+    style="height: 77vh;background-color: #fff;margin-top: 14vh;">
+
+    <div class="row" style="width: 100vw;">
+      <div class="col-2">
+        <ul style="list-style: none; padding-top: 2vw;">
+
+          <li class="list-item p-2">
+            <a class="vnav-link"  href="{%url 'supervisor_viewStock'%}">
+              View Stocks</a>
+          </li>
+          <li class="plist-item p-2">
+            <a class="vnav-link" style="color: #fff;" href="{%url 'addStock'%}">
+              Add Stock</a>
+          </li>
+          <li class="list-item p-2">
+            <a class="vnav-link" href="{%url 'removeStock'%}">
+              Remove Stock</a>
+          </li>
+          <li class="list-item p-2">
+            <a class="vnav-link" href="" data-toggle="modal" data-target="#changepassword">
+              Change Password</a>
+          </li>
+          <li class="list-item p-2">
+            <a class="" href="{%url 'supervisor_logout'%}"><button type="button" class="btn1 p-2">Logout</button></a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6" style="margin-left: 5vw;">
+        {% if messages%}
+          {% for message in messages%}
+            <div class="alert alert-{{message.tags}}">
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+        <form action= "addStock" method="POST">
+          {% csrf_token %}
+          <h2 style="font-size:2.2vw;font-weight: 800;color: #292f68;margin-top:1vw;margin-left: -0.5vw;">Add new stock or update existing one</h2>
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <label for="stock_id">Stock ID</label>
+              <input type="text" class="form-control" name="stock_id" id="stock_id" placeholder="Enter stock ID"
+                required>
+            </div>
+            <div class="col-sm-12 form-group">
+              <label for="item_name">Item Name</label>
+              <select class="form-control custom-select browser-default" name="item_id" id="item_name">
+                {% for item in items %}
+                 <option value="{{item.item_id}}">{{item.item_name}}</option>
+                {%endfor%}
+                 <option value="other" data-toggle="modal" data-target="#addItem">Add new item...</option>
+              </select>
+            </div>
+            <div class="col-sm-12 form-group">
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                   <label for="quantity">Quantity</label>
+                   <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Specify quantity"
+                required>
+                </div>
+                <div class="col-sm-6 form-group">
+                   <label for="quantity">Concentration</label>
+                    <input type="number"  class="form-control" name="item_concen" id="item_concen" placeholder="Enter chemical's Concentration">
+                </div>
+              </div>
+            </div>
+           
+            <div class="col-sm-12 form-group">
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                   <label for="quantity">Entry Date</label>
+                   <input type="date" class="form-control" name="entry_date" placeholder="Entry Date"
+                required>
+                </div>
+                <div class="col-sm-6 form-group">
+                   <label for="quantity">Expiry Date</label>
+                    <input type="date" step=0.01 class="form-control" name="expiry_date"  placeholder="Expiry Date"
+                    required>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12 form-group mb-3">
+              <button class="btn btn-primary float-right">Add</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer class="d-flex justify-content-center align-items-center">
+
+    <p>&copy; Chemlabs | 2020</p>
+
+  </footer>
+
+ <!--<div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="old_pswd">Old Password</label>
+              <input type="password" class="form-control" id="old_pswd" placeholder="Enter old password">
+            </div>
+            <div class="form-group">
+              <label for="new_pswd">New Password</label>
+              <input type="password" class="form-control" id="new_pswd" placeholder="Enter new password">
+            </div>
+            <div class="form-group">
+              <label for="confirm_pswd">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirm_pswd" placeholder="Confirm new password">
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-center">
+              <button type="submit" class="btn btn-success">Change</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div> -->
+
+
+<div class="modal fade" id="addItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="exampleModalLabel">Add new item</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="addItem" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="old_pswd">Item Name</label>
+             <input type="text" class="form-control" name="item_name" id="item_name" placeholder="Enter Item Name"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="new_pswd">Type of Item</label>
+              <label class="radio-inline"><input type="radio" name="item_type" id= "chemical" value ="1" required checked>Chemical</label>
+               <label class="radio-inline"><input type="radio" name="item_type" id= "apparatus" class="item_type" value ="2">Apparatus</label>
+            </div>
+            </div>
+            <div class="col-sm-7 form-group">
+             <label for="quantity">State of Item</label><br>
+               <label class="radio-inline"><input type="radio" value ="1" name="item_state" id="item_state">Solid</label>
+               <label class="radio-inline"><input type="radio" value="2" name="item_state" id="item_state1">Liquid</label>
+            </div>
+            <div class=" col-sm-7 form-group">
+            <label for="item_name">Type of solid</label>
+              <select class="form-control custom-select browser-default" id="solid_type" name="solid_type" disabled>
+                <option value="1">Amorphous</option>
+                <option value="2">Crystaline</option>
+              </select>
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-center">
+              <button type="submit" class="btn btn-success">Add</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+ <script type="text/javascript">
+    $(function () {
+        $("input[name='item_type']").click(function () {
+            if ($("#chemical").is(":checked")) {
+                $("#item_state").removeAttr("disabled");
+                $("#item_state1").removeAttr("disabled");
+                $("#item_state").focus();
+            } else {
+                $("#item_state").attr("disabled", "disabled");
+                $("#item_state1").attr("disabled", "disabled");
+            }
+        });
+    });
+
+    $(function () {
+        $("input[name='item_state']").click(function () {
+            if ($("#item_state").is(":checked")) {
+                $("#solid_type").removeAttr("disabled");
+                $("#solid_type").focus();
+            } else {
+                $("#solid_type").attr("disabled", "disabled");
+            }
+        });
+    });
+</script>
+
+ <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+ <script type="text/javascript">
+    $(function () {
+        $("#item_name").change(function () {
+            if ($("item_state").attr('value')  == 2) {
+                $("#item_concen").removeAttr("disabled");
+                $("#item_concen").focus();
+            } else {
+                $("#item_concen").attr("disabled", "disabled");
+            }
+        });
+    });
+
+</script>-->
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

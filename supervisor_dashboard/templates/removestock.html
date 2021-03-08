@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <title>ChemLabs | Remove Stocks</title>
+
+</head>
+
+<body>
+
+  <nav class="navbar fixed-top navbar-expand-xl " style="background-color:  #76CBF4;">
+    <a class="navbar-brand" href="{% url 'home' %}"><span class="logo_title">Chem</span><img id="navlogo"
+        src="{% static 'img/logo.png' %}"><span class="logo_title">labs</span></a>
+    <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon "></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="snav-item">
+          Supervisor
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid d-flex align-items-center justify-content-center"
+    style="height: 77vh;background-color: #fff;margin-top: 14vh;">
+
+    <div class="row" style="width: 100vw;">
+      <div class="col-2">
+        <ul style="list-style: none; padding-top: 2vw;">
+
+          <li class="list-item p-2">
+            <a class="vnav-link"  href="{%url 'supervisor_viewStock'%}">
+              View Stocks</a>
+          </li>
+          <li class="list-item p-2">
+            <a class="vnav-link"  href="{%url 'addStock'%}">
+              Add Stock</a>
+          </li>
+          <li class="plist-item p-2">
+            <a class="vnav-link" style="color: #fff;" href="{%url 'removeStock'%}l">
+              Remove Stock</a>
+          </li>
+          <li class="list-item p-2">
+            <a class="vnav-link" href="" data-toggle="modal" data-target="#changepassword">
+              Change Password</a>
+          </li>
+          <li class="list-item p-2">
+            <a class="" href="{%url 'supervisor_logout'%}"><button type="button" class="btn1 p-2">Logout</button></a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6" style="margin-left: 5vw;">
+       {% if messages%}
+          {% for message in messages%}
+            <div class="alert alert-{{message.tags}}">
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+        <form action= "removeStock" method="POST">
+          {% csrf_token %}
+          <h2 style="font-size:2.2vw;font-weight: 800;color: #292f68;margin-top:1vw;margin-left: -0.5vw;">Want to use resource?</h2>
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <label for="remvdate">Date of removal</label>
+              <input type="date" class="form-control" name="date" id="remvdate" placeholder="Select Date"
+                required>
+            </div>
+            <div class="col-sm-6 form-group">
+              <label for="item_name">Item Name</label>
+              <select class="form-control custom-select browser-default" name="item_id" placeholder="Select Item">
+                {% for item in items %}
+                 <option value="{{item.item_id}}">{{item.item_name}} {% if item.solid_type == 1 %}(Amorphous)
+                 {% elif item.solid_type == 2 %}(Crystaline) {% endif %}</option>
+                {%endfor%}
+              </select>
+            </div>
+            <div class="col-sm-6 form-group">
+              <label for="quantity">Quantity</label>
+              <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Specify quantity"
+                required>
+            </div>
+            <div class="col-sm-6 form-group">
+              <label for="quantity">Concentration(optional)</label>
+              <input type="number" class="form-control" name="item_concen" id="item_concen" placeholder="If liquid specify concentration">
+            </div>
+            <div class="col-sm-12 form-group">
+                <label for="purpose">Purpose of usage</label>
+                <textarea  class="form-control" name="purpose" id="purpose" placeholder="Describe your purpose"
+                  required>
+                </textarea>
+              </div>
+            <div class="col-sm-12 form-group mb-3">
+              <button class="btn btn-primary float-right">Remove</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer class="d-flex justify-content-center align-items-center">
+
+    <p>&copy; Chemlabs | 2020</p>
+
+  </footer>
+
+  <div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="old_pswd">Old Password</label>
+              <input type="password" class="form-control" id="old_pswd" placeholder="Enter old password">
+            </div>
+            <div class="form-group">
+              <label for="new_pswd">New Password</label>
+              <input type="password" class="form-control" id="new_pswd" placeholder="Enter new password">
+            </div>
+            <div class="form-group">
+              <label for="confirm_pswd">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirm_pswd" placeholder="Confirm new password">
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-center">
+              <button type="submit" class="btn btn-success">Change</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

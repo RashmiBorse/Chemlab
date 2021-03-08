@@ -1,0 +1,214 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    overflow: hidden;
+    background-color: #76CBF4;
+}
+.brdr{
+    border: solid black 2px;
+}
+/*______________________navbar__________________________*/
+
+  #navlogo {
+    width:7vh;
+    height: 7vh;
+    margin-bottom: 1vw;
+  }
+
+  nav a {
+    color: #fff;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  nav a:hover {
+    color:#012293;
+  }
+
+.logo_title{
+    margin: 0;
+    padding: 0;
+    font-weight: 700;
+}
+.homepage{
+    width: 100%;
+    height: 90vh;
+}
+.homeimg{
+    margin-top: 32.7vh;
+    margin-right: -3vw;
+    width: 90%;
+}
+#home_title{
+    margin-left: 2vw;
+    margin-top: 20vh;
+    font-size: 7vw;
+    font-weight: 700;
+    color: #fff;
+}
+
+.ques,.ans{
+    color: rgb(12, 27, 94);
+    margin-left: 3vw ;
+    font-weight: 600;
+}
+
+/* .row{
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 12px 12px 22px grey;
+} */
+.mainrow{
+   
+    margin-top: 10vw;
+    background-color: #fff;
+}
+.admin-title{
+    margin-top: 3vw;
+    color: #133770;
+    font-size: 3vw;
+    font-weight: 700;
+}
+.btn1{
+    cursor: pointer;
+    border: none;
+    outline: none;
+    height: 50px;
+    width: 100%;
+    background-color: rgb(22, 67, 134);
+    color: white;
+    border-radius: 4px;
+    height: fit-content;
+    font-weight: bold;
+}
+.btn1:hover{
+    background: rgb(29, 88, 177);
+    box-shadow: 2px 5px 10px solid black;
+    color: white;
+}
+
+footer{
+    
+    background-color: rgb(205, 223, 231);
+    color: rgb(58, 69, 133);
+    height: 10vh;
+    font-weight: 600;
+}
+
+.card-header{
+    color: rgb(50, 51, 58);
+    font-size: 3vw;
+    font-weight: 700;
+}
+.card-body{
+    border: 0px;
+}
+.card-content{
+    position: relative;
+    height:50vh;
+    overflow: auto;
+}
+.vertical-nav{
+    background-color: rgb(224, 222, 222);
+
+}
+
+.plist-item{
+    background-color: #76CBF4;
+}
+
+/* _______________________________________modal_________________________________ */
+
+h4 {
+    margin: 2rem 0rem;
+}
+.panel {
+    border-radius: 4px;
+    padding: 1rem;
+    margin-top: 0.2rem;
+    background-color: #f5f5f5;
+    color: #323b40;
+}
+.panel.panel-blue {
+    background-color: #e0f5ff;
+    color: #00a5fa;
+}
+.panel.panel-big-height {
+    min-height: 150px;
+}
+.item {
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin: 0.2rem;
+}
+.item.item-blue {
+    background-color: #b9e5fe;
+    color: #00a5fa;
+}
+.item.item-green {
+    background-color: #b7e0dc;
+    color: #019888;
+}
+.item.item-lime {
+    background-color: #c7e8c8;
+    color: #42b045;
+}
+.item.item-yellow {
+    background-color: #ffeeba;
+    color: #ff9901;
+}
+.item.item-pink {
+    background-color: #fabad0;
+    color: #ef075f;
+}
+.item.item-red {
+    background-color: #fec9c6;
+    color: #fd3d08;
+}
+.item.item-big-width {
+    min-width: 380px;
+}
+.snav-item{
+    font-weight: 600;
+    font-size: 3vw;
+    color: #fff;
+}
+
+/* __________________Tabs____________________________ */
+
+.nav-pills-custom .nav-link {
+    color: #aaa;
+    background: #fff;
+    position: relative;
+}
+
+.nav-pills-custom .nav-link.active {
+    color: #45b649;
+    background: #fff;
+}
+
+
+/* Add indicator arrow for the active tab */
+@media (min-width: 992px) {
+    .nav-pills-custom .nav-link::before {
+        content: '';
+        display: block;
+        border-top: 8px solid transparent;
+        border-left: 10px solid #fff;
+        border-bottom: 8px solid transparent;
+        position: absolute;
+        top: 50%;
+        right: -10px;
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+}
+
+.nav-pills-custom .nav-link.active::before {
+    opacity: 1;
+}
+
+
